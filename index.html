@@ -108,7 +108,7 @@
           <section class="geo-input-panel panel">
             <div class="panel-heading"><div><h2>공통 컨텍스트 수집</h2><p>모든 분석 영역이 같은 입력을 바라보도록 사이트·브랜드·업종을 먼저 고정합니다.</p></div><span class="snapshot-pill" id="snapshotStatus">LOCAL SNAPSHOT</span></div>
             <form class="geo-form" id="geoForm">
-              <div class="form-field"><label for="geoUrl">사이트 URL</label><input id="geoUrl" name="url" type="url" value="https://haistclinic.com" placeholder="https://example.com" required /></div>
+              <div class="form-field"><label for="geoUrl">사이트 URL</label><input id="geoUrl" name="url" type="url" value="https://www.highsturology.co.kr/v2/main/main.php" placeholder="https://example.com" required /></div>
               <div class="form-field"><label for="geoBrand">브랜드명</label><input id="geoBrand" name="brand" type="text" value="하이스트비뇨기과" required /></div>
               <div class="form-field"><label for="geoIndustry">업종 맥락</label><select id="geoIndustry" name="industry"><option value="medical">지역 의료 서비스</option><option value="commerce">커머스</option><option value="media">미디어·출판</option><option value="saas">SaaS·기술 서비스</option></select></div>
             </form>
@@ -156,6 +156,7 @@
     </div>
 
     <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" type="button">×</button><div class="eyebrow accent" id="modalEyebrow">QUICK CAPTURE</div><h2 id="modalTitle">데이터 기록</h2><p class="modal-description" id="modalDescription">발견한 신호를 간단히 남겨두세요.</p><form id="captureForm"><div class="form-fields" id="formFields"></div><button class="primary-button full" type="submit" id="modalSubmitButton">기록 저장하기</button></form></div></div>
+    <div class="detail-backdrop" id="adDetailBackdrop" aria-hidden="true"><div class="ad-detail-modal" role="dialog" aria-modal="true" aria-labelledby="adDetailTitle"><button class="modal-close" id="adDetailClose" type="button">×</button><div class="ad-detail-kicker"><span class="detail-live-dot"></span> META AD LIBRARY · 광고 상세</div><div class="ad-detail-head"><div class="ad-detail-symbol" id="adDetailSymbol">Y</div><div><h2 id="adDetailTitle">광고 제목</h2><p id="adDetailCompetitor">경쟁사</p></div><span class="duration-pill" id="adDetailDuration">42일째 집행</span></div><div class="ad-detail-copy" id="adDetailCopy"></div><dl class="ad-detail-meta" id="adDetailMeta"></dl><section class="ad-detail-insight"><span class="insight-label">이 광고에서 읽은 신호</span><strong id="adDetailInsight">핵심 신호</strong><p id="adDetailResponse">하이스트가 대응할 관점</p></section><button class="primary-button full" id="adDetailAction" type="button">이 신호로 콘텐츠 아이디어 만들기</button></div></div>
     <div class="toast" id="toast"><span>✓</span><span id="toastMessage">저장했습니다.</span></div>
     <script src="app.js"></script>
   </body>

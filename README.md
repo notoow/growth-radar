@@ -26,7 +26,7 @@ python -m http.server 4173
 - **마케팅 분석**: 환자 검색 의도, 경쟁사 메시지, 하이스트의 콘텐츠·랜딩·전환 액션을 연결합니다.
 - **BYOK**: 상단 `BYOK`에서 각 사용자가 자신의 AI 키를 브라우저에 저장할 수 있습니다. 키는 저장소나 코드에 기록하지 않습니다.
 
-레퍼런스 해석과 설계 원칙은 [docs/REFERENCE_ANALYSIS.md](docs/REFERENCE_ANALYSIS.md), [docs/GEO_ARCHITECTURE.md](docs/GEO_ARCHITECTURE.md), [docs/EEAT_EVIDENCE_MATRIX.md](docs/EEAT_EVIDENCE_MATRIX.md), [docs/MARKETING_ANALYSIS.md](docs/MARKETING_ANALYSIS.md)에 정리했습니다.
+레퍼런스 해석과 설계 원칙은 [docs/REFERENCE_ANALYSIS.md](docs/REFERENCE_ANALYSIS.md), [docs/GEO_ARCHITECTURE.md](docs/GEO_ARCHITECTURE.md), [docs/EEAT_EVIDENCE_MATRIX.md](docs/EEAT_EVIDENCE_MATRIX.md), [docs/MARKETING_ANALYSIS.md](docs/MARKETING_ANALYSIS.md), [docs/SITE_BASELINE.md](docs/SITE_BASELINE.md)에 정리했습니다.
 
 데이터는 브라우저의 `localStorage`에 저장됩니다. 현재 버전은 외부 서비스 API를 직접 호출하지 않으므로, 실제 자동 수집을 붙이려면 Meta Ad Library·네이버 키워드 도구·Search Console API와 GEO 스냅샷 수집기 연동이 다음 단계입니다.
 
