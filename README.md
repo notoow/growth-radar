@@ -34,4 +34,6 @@ python -m http.server 4173
 
 저장소의 `main` 브랜치에 push하면 `.github/workflows/pages.yml`이 정적 파일을 GitHub Pages에 배포합니다. GitHub 저장소 설정에서 Pages의 Source를 **GitHub Actions**로 선택하세요.
 
+현재 공개 주소: https://notoow.github.io/growth-radar/
+
 정적 Pages에서는 서버 비밀키를 숨길 수 없습니다. 따라서 실측용 키는 개인별 브라우저 BYOK로만 사용하거나, 별도 백엔드/Actions Secret에서 호출하는 구조를 권장합니다.
