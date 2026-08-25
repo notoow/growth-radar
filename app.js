@@ -1,0 +1,144 @@
+const initialAds = [
+  { id: 1, competitor: '예작', title: '남성 확대 수술, 다시 태어나다', copy: '42,000건 압도적 경험의 차이. 길이와 두께, 시간과 자신감.', days: 42, found: '8월 24일', type: 'image', insight: '경험 수치 강조' },
+  { id: 2, competitor: 'doctor.jmj', title: 'JMJ5 복합수술', copy: '남성 수술은 닥터조물주. 파트별 홍성윤 원장님 직접 진행.', days: 101, found: '8월 24일', type: 'image', insight: '의료진 직접 진행' },
+  { id: 3, competitor: '프라움', title: '남들에게 말 못했던 고민…', copy: '이제 혼자 고민하지 마세요. 비뇨의학과 전문의가 상담해드립니다.', days: 18, found: '8월 23일', type: 'video', insight: '익명성·무료상담' },
+  { id: 4, competitor: '예작', title: '남성 확대, 길이와 두께 시간과 자신감', copy: '25년 경력의 비뇨의학과 전문의가 전하는 안전한 남성수술.', days: 31, found: '8월 22일', type: 'image', insight: '경력·안전성' },
+  { id: 5, competitor: 'doctor.jmj', title: '안전하게, 자연스럽게', copy: '길이 확대만 양심 두께 2시간. 남성수술 11,418건 이상 집행.', days: 24, found: '8월 22일', type: 'image', insight: '다건 수술 실적' },
+  { id: 6, competitor: '프라움', title: '수천 건 이상의 경험으로', copy: '상담 비용 없음 · 100% 비밀 보장. 지금 무료 상담 신청하세요.', days: 12, found: '8월 21일', type: 'video', insight: '비밀 보장' }
+];
+const initialKeywords = [
+  { id: 1, keyword: '남성확대수술 부작용', group: '불안 해소형 · 전문성 콘텐츠', volume: 880, competition: '낮음', rank: 18, score: 92, status: '제작 대기' },
+  { id: 2, keyword: '음경확대 길이 두께', group: '비교 탐색형 · 랜딩 연결', volume: 720, competition: '낮음', rank: 24, score: 88, status: '제작 대기' },
+  { id: 3, keyword: '남성수술 회복기간', group: '정보 탐색형 · FAQ', volume: 590, competition: '낮음', rank: 13, score: 84, status: '초안 작성' },
+  { id: 4, keyword: '비뇨기과 남성수술 비용', group: '전환 직전 · 상담 유도', volume: 1_000, competition: '보통', rank: 31, score: 81, status: '제작 대기' },
+  { id: 5, keyword: '남성확대수술 자연스러움', group: '차별점 · 사례 콘텐츠', volume: 320, competition: '낮음', rank: 16, score: 77, status: '제작 대기' }
+];
+const initialContent = [
+  { id: 1, lane: 'idea', tag: '광고 신호 →', title: '“42,000건” 숫자 경쟁, 하이스트가 말해야 할 안전성의 기준', description: '예작의 경험 수치 소재를 참고하되, 상담 전 확인해야 할 안전 기준으로 재구성합니다.', source: '예작 · 42일 집행' },
+  { id: 2, lane: 'idea', tag: 'SEO 기회 →', title: '남성확대수술 부작용, 병원 상담 전 꼭 물어볼 5가지', description: '현재 순위 18위. 불안 해소형 정보 콘텐츠로 상위 10위를 노립니다.', source: 'GSC · 기회점수 92' },
+  { id: 3, lane: 'progress', tag: '작성 중', title: '남성수술 회복기간: 일상 복귀까지 실제 타임라인', description: '검색 의도에 맞춰 수술 당일·1주·1개월 기준으로 정리합니다.', source: '키워드 · 현재 13위' },
+  { id: 4, lane: 'done', tag: '발행 완료', title: '자연스러운 남성수술을 결정하는 3가지 기준', description: '전문의 상담 CTA와 내부 링크를 연결했습니다.', source: '발행 · 8월 20일' }
+];
+const initialLogs = [
+  { date: '8월 24일', channel: 'Meta Ads', target: '예작 · 남성 확대 소재 2건', note: '42일 집행 소재 발견' },
+  { date: '8월 23일', channel: 'Naver', target: '남성확대수술 부작용', note: '검색량 880 / 경쟁 낮음' },
+  { date: '8월 22일', channel: 'Search Console', target: '회복기간 · 현재 13위', note: '콘텐츠 기회로 등록' }
+];
+
+const geoSignalDefinitions = [
+  { key:'https', title:'HTTPS 적용', category:'기술 인프라', description:'AI 봇이 안전하게 접근할 수 있는 보안 통신', default:true },
+  { key:'html', title:'본문 HTML 구조', category:'기술 인프라', description:'핵심 내용이 파싱 가능한 본문에 존재', default:true },
+  { key:'sitemap', title:'sitemap.xml', category:'기술 인프라', description:'주요 연결 페이지와 최신 URL 목록', default:true },
+  { key:'robots', title:'robots.txt', category:'기술 인프라', description:'크롤러 접근 범위와 수집 허용 정책', default:true },
+  { key:'llms', title:'llms.txt 안내서', category:'기술 인프라', description:'LLM이 읽을 핵심 요약과 탐색 경로', default:false },
+  { key:'mobile', title:'모바일·성능 최적화', category:'기술 인프라', description:'모바일에서도 손실 없이 읽히는 페이지', default:true },
+  { key:'schema', title:'Organization / LocalBusiness', category:'구조화 데이터', description:'브랜드·기관 엔티티를 설명하는 JSON-LD', default:false },
+  { key:'faqSchema', title:'FAQ / MedicalWebPage 스키마', category:'구조화 데이터', description:'질문과 답변의 의미를 구조화', default:false },
+  { key:'personSchema', title:'Person + sameAs', category:'구조화 데이터', description:'의료진 실명·자격·공식 프로필 연결', default:false },
+  { key:'namedAuthor', title:'실명 작성자 표기', category:'콘텐츠 E-E-A-T', description:'관리자·운영팀이 아닌 구체적인 저자 정보', default:false },
+  { key:'credentials', title:'자격·경력 증빙', category:'콘텐츠 E-E-A-T', description:'전공·자격증·경력 연차·검증 링크', default:true },
+  { key:'experienceEvidence', title:'경험·사례 근거', category:'콘텐츠 E-E-A-T', description:'구체적 수치·케이스·직접 경험 서술', default:true },
+  { key:'trustPages', title:'신뢰 페이지', category:'콘텐츠 E-E-A-T', description:'연락처·개인정보·이용약관·의료 안내', default:true },
+  { key:'externalAuthority', title:'외부 권위 출처', category:'브랜드 권위', description:'공공기관·학회·언론·공식 외부 프로필', default:false },
+  { key:'pressMentions', title:'언론·커뮤니티 언급', category:'브랜드 권위', description:'사이트 밖에서 확인되는 브랜드 기록', default:false },
+  { key:'directAnswers', title:'질문형 직접 답변', category:'AI 인용성', description:'환자의 질문에 짧고 명확하게 답하는 블록', default:false },
+  { key:'freshness', title:'최신성·수정일 표시', category:'AI 인용성', description:'최근 업데이트와 콘텐츠 신선도 신호', default:true },
+  { key:'internalLinks', title:'주제 클러스터 링크', category:'AI 인용성', description:'관련 질문과 근거 페이지의 연결 구조', default:true }
+];
+const defaultGeoSignals = Object.fromEntries(geoSignalDefinitions.map(signal => [signal.key, signal.default]));
+const geoState = loadObject('growth-radar-geo', { url:'https://haistclinic.com', brand:'하이스트비뇨기과', industry:'medical', signals:defaultGeoSignals });
+const marketingIntents = [
+  { question:'남성확대수술 부작용은 무엇인가요?', intent:'불안 해소', opportunity:'현재 18위 · 낮은 경쟁', action:'의료진 검토 FAQ + 상담 전 체크리스트', cta:'안전 기준 확인하기' },
+  { question:'남성수술 회복기간은 얼마나 걸리나요?', intent:'정보 탐색', opportunity:'현재 13위 · 광고 신호 연결', action:'당일·1주·1개월 타임라인 콘텐츠', cta:'회복 과정 보기' },
+  { question:'자연스러운 남성확대의 기준은?', intent:'비교·검토', opportunity:'경쟁사 반복 메시지 공백', action:'과장 없는 판단 기준 3가지', cta:'전문의 상담 신청' }
+];
+const competitorMessages = [
+  { name:'doctor.jmj', signal:'원장 직접 진행 · 11,418건', tone:'실적·의료진', gap:'수술 전후 안전 기준과 회복 설명', response:'진료 과정·검사·회복을 단계별로 공개' },
+  { name:'예작', signal:'42,000건 · 25년 경력', tone:'규모·경력', gap:'숫자의 의미와 개인별 적합성', response:'경험 수치보다 상담 판단 기준을 제시' },
+  { name:'프라움', signal:'무료 상담 · 100% 비밀 보장', tone:'장벽 제거', gap:'상담 이후의 의료적 근거', response:'익명 상담 + 의료진 자격·근거 페이지 연결' }
+];
+const marketingActions = [
+  { priority:'01', type:'기술', title:'llms.txt와 의료진 Person 스키마를 먼저 배치', detail:'AI가 읽을 수 있는 경로와 담당 의료진의 정체성을 동시에 고정합니다.', owner:'개발·SEO', impact:'인용성 + 구조화' },
+  { priority:'02', type:'콘텐츠', title:'“부작용·회복기간·자연스러움” 3개 허브 발행', detail:'경쟁사 광고의 주장보다 환자의 질문과 판단 기준을 중심으로 구성합니다.', owner:'콘텐츠·원장', impact:'E-E-A-T + 검색 수요' },
+  { priority:'03', type:'전환', title:'광고 랜딩의 상담 전 근거 블록 개선', detail:'무료 상담 CTA 앞에 자격, 검사, 회복, 개인정보 보호 근거를 노출합니다.', owner:'마케팅·디자인', impact:'신뢰 + 전환' }
+];
+
+const state = { ads: load('growth-radar-ads', initialAds), keywords: load('growth-radar-keywords', initialKeywords), content: load('growth-radar-content', initialContent), logs: load('growth-radar-logs', initialLogs), selectedCompetitor: 'all', modalType: null };
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+function load(key, fallback) { try { const data = JSON.parse(localStorage.getItem(key)); return Array.isArray(data) && data.length ? data : fallback; } catch { return fallback; } }
+function loadObject(key, fallback) { try { const data = JSON.parse(localStorage.getItem(key)); return data && typeof data === 'object' ? { ...fallback, ...data, signals:{ ...fallback.signals, ...(data.signals || {}) } } : fallback; } catch { return fallback; } }
+function save(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function escapeHtml(value = '') { return String(value).replace(/[&<>'"]/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char])); }
+function competitorClass(name) { return name === 'doctor.jmj' ? 'dot-jmj' : name === '예작' ? 'dot-yezak' : 'dot-praum'; }
+function showToast(message) { $('#toastMessage').textContent = message; $('#toast').classList.add('show'); setTimeout(() => $('#toast').classList.remove('show'), 2300); }
+
+function renderOverview() {
+  const filtered = state.ads.filter(ad => state.selectedCompetitor === 'all' || ad.competitor === state.selectedCompetitor).sort((a,b) => b.days-a.days).slice(0, 5);
+  $$('#overviewCompetitorTabs .filter-chip').forEach(button => {
+    const competitor = button.dataset.competitor;
+    const count = competitor === 'all' ? state.ads.length : state.ads.filter(ad => ad.competitor === competitor).length;
+    const countNode = button.querySelector('span');
+    if (countNode) countNode.textContent = count;
+    button.classList.toggle('active', competitor === state.selectedCompetitor);
+  });
+  $('#overviewAdList').innerHTML = filtered.map(ad => `<div class="ad-row"><div class="ad-competitor"><i class="competitor-dot ${competitorClass(ad.competitor)}"></i>${escapeHtml(ad.competitor)}</div><div class="ad-title">${escapeHtml(ad.title)}</div><div class="ad-duration"><strong>${ad.days}일째</strong></div><div class="ad-status">활성</div></div>`).join('');
+  const opps = state.keywords.slice().sort((a,b)=>b.score-a.score).slice(0,3); $('#overviewOpportunityList').innerHTML = opps.map(item => `<div class="opportunity-row"><div><div class="opportunity-name">${escapeHtml(item.keyword)}</div><div class="opportunity-bar"><span style="width:${item.score}%"></span></div></div><div class="opportunity-score">${item.score}</div></div>`).join('');
+  $('[data-stat="ads"]').textContent = state.ads.length;
+  $('[data-stat="days"]').innerHTML = `${Math.round(state.ads.reduce((sum, ad) => sum + ad.days, 0) / Math.max(state.ads.length, 1))}<span class="unit">일</span>`;
+  $('[data-stat="opportunities"]').textContent = state.keywords.filter(k=>k.rank > 10).length;
+  $('[data-stat="logs"]').innerHTML = `${state.logs.length}<span class="unit">회</span>`;
+}
+function renderAds() {
+  let ads = [...state.ads]; const filter = state.selectedCompetitor; if (filter !== 'all') ads = ads.filter(ad => ad.competitor === filter);
+  $$('#adsFilters .filter-chip').forEach(button => button.classList.toggle('active', button.dataset.competitor === state.selectedCompetitor));
+  const sort = $('#adSort')?.value || 'days'; if (sort === 'days') ads.sort((a,b)=>b.days-a.days); if (sort === 'recent') ads.sort((a,b)=>String(b.found).localeCompare(String(a.found))); if (sort === 'competitor') ads.sort((a,b)=>a.competitor.localeCompare(b.competitor));
+  $('#adArchiveGrid').innerHTML = ads.map(ad => `<article class="ad-card"><div class="ad-card-top"><div class="ad-symbol">${ad.competitor === '예작' ? 'Y' : ad.competitor === '프라움' ? 'P' : 'J'}</div><span class="duration-pill">${ad.days}일째 집행</span></div><div class="ad-card-body"><h3>${escapeHtml(ad.competitor)} · ${escapeHtml(ad.title)}</h3><p class="ad-card-copy">${escapeHtml(ad.copy)}</p><div class="ad-card-meta"><span>발견 ${escapeHtml(ad.found)}</span><span class="insight-tag">${escapeHtml(ad.insight)}</span></div></div></article>`).join('');
+}
+function renderKeywords() {
+  $('#keywordTableBody').innerHTML = state.keywords.slice().sort((a,b)=>b.score-a.score).map(item => `<tr><td><div class="keyword-title">${escapeHtml(item.keyword)}</div><div class="keyword-sub">${escapeHtml(item.group)}</div></td><td>${Number(item.volume).toLocaleString()}</td><td><span class="competition ${item.competition === '보통' ? 'medium' : ''}"><i></i>${escapeHtml(item.competition)}</span></td><td><span class="rank">${item.rank}위</span></td><td><span class="score">${item.score} / 100</span></td><td><span class="status-pill ${item.status === '초안 작성' ? 'progress' : item.status === '발행 완료' ? 'done' : 'todo'}">${escapeHtml(item.status)}</span></td><td><button class="row-menu" data-delete-keyword="${item.id}" type="button">···</button></td></tr>`).join('');
+}
+const laneNames = { idea:'아이디어', progress:'작성 중', done:'발행 완료' };
+function renderContent() { $('#contentBoard').innerHTML = Object.entries(laneNames).map(([lane, name]) => { const items = state.content.filter(item => item.lane === lane); return `<section class="content-column"><h3>${name}<span>${items.length}</span></h3>${items.map(item => `<article class="content-card"><div class="content-tag">${escapeHtml(item.tag)}</div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.description)}</p><div class="content-card-foot"><span>${escapeHtml(item.source)}</span>${lane !== 'done' ? `<button class="move-content" data-move-content="${item.id}" type="button">${lane === 'idea' ? '작성 시작 →' : '발행 완료 →'}</button>` : ''}</div></article>`).join('')}</section>`; }).join(''); }
+function renderLogs() { const days = ['월','화','수','목','금','토','일']; $('#logCalendar').innerHTML = days.map((day,index) => `<div class="calendar-day ${index === 0 ? 'active-day' : ''}"><div class="day-name">${day}</div><div class="day-number">${24+index}${index<3 ? '<i class="log-dot"></i>' : ''}</div></div>`).join(''); $('#logTable').innerHTML = state.logs.map(log => `<div class="log-entry"><span class="log-date">${escapeHtml(log.date)}</span><span class="log-channel">${escapeHtml(log.channel)}</span><strong>${escapeHtml(log.target)}</strong><small>${escapeHtml(log.note)}</small></div>`).join(''); }
+function calculateGeo() {
+  const s = geoState.signals;
+  const score = (base, parts) => Math.min(100, Math.round(base + parts.reduce((total, part) => total + (s[part.key] ? part.points : 0), 0)));
+  const metrics = [
+    { key:'citability', label:'AI 인용성', short:'CITABILITY', question:'AI가 이 페이지에서 답변에 활용할 수 있는가', score:score(25,[{key:'directAnswers',points:25},{key:'faqSchema',points:15},{key:'llms',points:15},{key:'internalLinks',points:10},{key:'freshness',points:10}]), evidence:['질문형 직접 답변','FAQ 구조화','LLM 안내서','주제 클러스터','최신성'] },
+    { key:'authority', label:'브랜드 권위', short:'AUTHORITY', question:'사이트 밖에서도 확인되고 신뢰할 만한가', score:score(25,[{key:'externalAuthority',points:25},{key:'pressMentions',points:20},{key:'personSchema',points:15},{key:'credentials',points:15}]), evidence:['외부 권위 출처','언론·커뮤니티','Person 연결','자격·경력'] },
+    { key:'eeat', label:'콘텐츠 E-E-A-T', short:'E-E-A-T', question:'이 콘텐츠를 답변 재료로 믿을 근거가 있는가', score:score(20,[{key:'experienceEvidence',points:25},{key:'credentials',points:25},{key:'namedAuthor',points:15},{key:'externalAuthority',points:15},{key:'trustPages',points:10}]), evidence:['Experience 사례','Expertise 자격','실명 저자','외부 검증','신뢰 페이지'] },
+    { key:'technical', label:'기술적 인프라', short:'TECHNICAL', question:'AI 봇이 손실 없이 읽을 수 있는 상태인가', score:score(10,[{key:'https',points:15},{key:'html',points:15},{key:'sitemap',points:15},{key:'robots',points:10},{key:'llms',points:15},{key:'mobile',points:10}]), evidence:['HTTPS','본문 HTML','sitemap.xml','robots.txt','llms.txt','모바일·성능'] },
+    { key:'schema', label:'구조화 데이터', short:'SCHEMA', question:'AI가 오해 없이 파싱할 수 있는 형태인가', score:score(25,[{key:'schema',points:30},{key:'faqSchema',points:20},{key:'personSchema',points:25}]), evidence:['Organization','FAQ','Person + sameAs'] }
+  ];
+  const weights = { citability:.2, authority:.2, eeat:.25, technical:.2, schema:.15 };
+  const total = Math.round(metrics.reduce((sum, metric) => sum + metric.score * weights[metric.key], 0));
+  const grade = total >= 85 ? 'A · 강함' : total >= 70 ? 'B · 양호' : total >= 55 ? 'C · 보완' : 'D · 우선 개선';
+  const sorted = [...metrics].sort((a,b)=>a.score-b.score);
+  return { metrics, total, grade, sorted };
+}
+function renderGeoSignals() { $('#geoSignalGrid').innerHTML = geoSignalDefinitions.map(signal => `<label class="signal-check-card ${geoState.signals[signal.key] ? 'checked' : ''}"><input type="checkbox" data-geo-signal="${signal.key}" ${geoState.signals[signal.key] ? 'checked' : ''}><span class="signal-check-box"></span><span class="signal-check-copy"><strong>${escapeHtml(signal.title)}</strong><small>${escapeHtml(signal.category)} · ${escapeHtml(signal.description)}</small></span></label>`).join(''); $$('.signal-check-card input').forEach(input => input.addEventListener('change', event => { geoState.signals[event.target.dataset.geoSignal] = event.target.checked; event.target.closest('.signal-check-card').classList.toggle('checked', event.target.checked); })); }
+function renderGeoResult() { const result = calculateGeo(); $('#geoScore').textContent = result.total; $('#geoGrade').textContent = `등급 ${result.grade}`; $('#geoScoreLabel').textContent = result.total >= 70 ? 'AI 검색 대응 기반 양호' : 'AI 검색 대응 기반 보완 필요'; $('#geoScoreSummary').textContent = `${geoState.brand}의 현재 신호를 기준으로 ${result.sorted[0].label}부터 보완하면 인용 가능성을 가장 빠르게 끌어올릴 수 있습니다.`; $('#geoScoreRing').style.setProperty('--score', `${result.total * 3.6}deg`); $('#geoMetricsGrid').innerHTML = result.metrics.map(metric => `<article class="geo-metric-card"><div class="geo-metric-top"><span>${metric.short}</span><strong>${metric.score}/100</strong></div><h3>${metric.label}</h3><p>${metric.question}</p><div class="geo-progress"><span style="width:${metric.score}%"></span></div><div class="geo-evidence-line"><span>근거 ${metric.evidence.filter((_, index) => index < 2 && metric.score > 45).join(' · ')}</span><button type="button" data-view-target="marketing">액션 보기 →</button></div></article>`).join(''); const priorities = result.sorted.slice(0,3).map((metric,index) => `<div class="priority-mini-row"><span class="priority-number">0${index+1}</span><span><strong>${metric.label}</strong><small>${metric.score}점 · ${metric.evidence[0]} 확인 필요</small></span><span class="priority-impact">${index === 0 ? '즉시' : '다음'}</span></div>`); $('#geoPriorityMini').innerHTML = priorities.join(''); $('#geoPriorityList').innerHTML = result.sorted.map((metric,index) => `<div class="priority-row"><span class="priority-rank">0${index+1}</span><div class="priority-main"><div><strong>${metric.label}</strong><span class="score-chip">${metric.score}점</span></div><p>${metric.question}</p></div><div class="priority-action"><span>${metric.score < 60 ? '높은 영향' : metric.score < 75 ? '중간 영향' : '유지·검증'}</span><strong>${metric.score < 60 ? `먼저 ${metric.evidence[0]} 보완` : `현재 신호를 근거 블록으로 확장`}</strong></div></div>`).join(''); }
+function renderGeo() { $('#geoUrl').value = geoState.url; $('#geoBrand').value = geoState.brand; $('#geoIndustry').value = geoState.industry; renderGeoSignals(); renderGeoResult(); }
+function renderMarketing() { $('#intentList').innerHTML = marketingIntents.map(item => `<article class="intent-row"><div class="intent-question">${escapeHtml(item.question)}<span>${escapeHtml(item.intent)}</span></div><div class="intent-opportunity">${escapeHtml(item.opportunity)}</div><div class="intent-action"><strong>${escapeHtml(item.action)}</strong><small>CTA · ${escapeHtml(item.cta)}</small></div></article>`).join(''); $('#competitorMessageList').innerHTML = competitorMessages.map(item => `<article class="competitor-message-card"><div class="competitor-message-top"><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.tone)}</span></div><p>“${escapeHtml(item.signal)}”</p><div><small>하이스트가 파고들 빈틈</small><strong>${escapeHtml(item.gap)}</strong></div><div class="response-line">↳ ${escapeHtml(item.response)}</div></article>`).join(''); $('#marketingActionGrid').innerHTML = marketingActions.map(item => `<article class="marketing-action-card"><div class="action-index">${item.priority}</div><div><span>${escapeHtml(item.type)} · ${escapeHtml(item.impact)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.detail)}</p><small>담당 ${escapeHtml(item.owner)}</small></div></article>`).join(''); }
+function renderAll() { renderOverview(); renderAds(); renderKeywords(); renderContent(); renderLogs(); renderGeo(); renderMarketing(); }
+
+function setView(view) { $$('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.view === view)); $$('.page-view').forEach(page => page.classList.toggle('active', page.id === `view-${view}`)); const label = {overview:'대시보드', geo:'GEO 진단', marketing:'마케팅 분석', ads:'경쟁사 광고', keywords:'키워드 기회', content:'콘텐츠 큐', log:'수집 로그'}[view]; $('#pageLabel').textContent = label; window.scrollTo({top:0, behavior:'smooth'}); }
+function bindFilters(root) { $$('.filter-chip', root).forEach(button => button.addEventListener('click', () => { state.selectedCompetitor = button.dataset.competitor; $$('.filter-chip', root).forEach(btn => btn.classList.toggle('active', btn === button)); renderOverview(); renderAds(); })); }
+function field(label, name, type = 'text', placeholder = '', options = []) { if (type === 'select') return `<div class="form-field"><label for="${name}">${label}</label><select id="${name}" name="${name}">${options.map(option => `<option value="${option}">${option}</option>`).join('')}</select></div>`; return `<div class="form-field"><label for="${name}">${label}</label>${type === 'textarea' ? `<textarea id="${name}" name="${name}" placeholder="${placeholder}"></textarea>` : `<input id="${name}" name="${name}" type="${type}" placeholder="${placeholder}" required />`}</div>`; }
+function openModal(type) { state.modalType = type; const config = { ad:{ title:'경쟁사 광고 기록', description:'Meta Ad Library에서 발견한 광고 정보를 남겨두세요.', fields:field('경쟁사','competitor','select','',['doctor.jmj','예작','프라움'])+field('광고 제목','title','text','예: 남성 확대 수술, 다시 태어나다')+field('집행 기간 (일)','days','number','예: 21')+field('핵심 신호','insight','text','예: 경험 수치 강조') }, keyword:{ title:'키워드 기회 기록', description:'검색량과 현재 순위를 입력하면 우선순위를 계산합니다.', fields:field('키워드','keyword','text','예: 남성확대수술 회복기간')+field('월 검색량','volume','number','예: 590')+field('현재 순위','rank','number','예: 18')+field('경쟁도','competition','select','',['낮음','보통']) }, content:{ title:'콘텐츠 아이디어 추가', description:'광고나 키워드에서 얻은 다음 액션을 적어두세요.', fields:field('콘텐츠 제목','title','text','예: 상담 전 꼭 물어볼 5가지')+field('출발점','tag','select','',['SEO 기회 →','광고 신호 →','직접 아이디어'])+field('메모','description','textarea','어떤 관점으로 풀지 간단히 적어보세요.') }, log:{ title:'수집 기록 추가', description:'오늘 확인한 채널과 내용을 남겨 루틴을 이어가세요.', fields:field('채널','channel','select','',['Meta Ads','Naver','Search Console'])+field('확인한 내용','target','text','예: 프라움 신규 영상 소재')+field('메모','note','text','예: 18일째 집행 중') }, token:{ title:'개별 토큰 설정', description:'이 토큰은 이 브라우저의 localStorage에만 저장됩니다. 공개 저장소나 코드에는 기록하지 마세요.', fields:field('Provider','provider','select','',['Gemini','OpenAI-compatible'])+field('API 키','token','password','AIza… 또는 sk-…') } }[type]; $('#modalEyebrow').textContent = type === 'token' ? 'BYOK · LOCAL ONLY' : 'QUICK CAPTURE'; $('#modalTitle').textContent = config.title; $('#modalDescription').textContent = config.description; $('#formFields').innerHTML = config.fields; $('#modalSubmitButton').textContent = type === 'token' ? '이 브라우저에만 저장' : '기록 저장하기'; $('#modalBackdrop').classList.add('open'); $('#modalBackdrop').setAttribute('aria-hidden','false'); setTimeout(() => $('#formFields input, #formFields select, #formFields textarea')?.focus(), 50); }
+function closeModal() { $('#modalBackdrop').classList.remove('open'); $('#modalBackdrop').setAttribute('aria-hidden','true'); $('#captureForm').reset(); state.modalType = null; }
+function handleSubmit(event) { event.preventDefault(); const data = Object.fromEntries(new FormData(event.target).entries()); const id = Date.now(); if (state.modalType === 'ad') { state.ads.push({ id, ...data, days:Number(data.days), found:'오늘', copy:'직접 기록한 경쟁사 소재입니다.', type:'image', insight:data.insight || '추가 관찰 필요' }); save('growth-radar-ads', state.ads); showToast('경쟁사 광고를 기록했습니다.'); } if (state.modalType === 'keyword') { const rank=Number(data.rank), volume=Number(data.volume); state.keywords.push({ id, ...data, volume, rank, score:Math.min(99, Math.max(40, Math.round((100 - Number(data.competition === '보통' ? 35 : 10)) * Math.min(1, volume/800) * Math.min(1.2, rank/15)))) , group:'직접 추가한 검색 기회', status:'제작 대기' }); save('growth-radar-keywords', state.keywords); showToast('키워드 기회를 기록했습니다.'); } if (state.modalType === 'content') { state.content.push({ id, ...data, lane:'idea', source:'직접 추가' }); save('growth-radar-content', state.content); showToast('콘텐츠 아이디어를 추가했습니다.'); } if (state.modalType === 'log') { state.logs.unshift({ id, date:'오늘', ...data }); save('growth-radar-logs', state.logs); showToast('수집 로그를 남겼습니다.'); } if (state.modalType === 'token') { localStorage.setItem('growth-radar-byok', JSON.stringify({ provider:data.provider, savedAt:new Date().toISOString(), token:data.token })); updateKeyStatus(); showToast('토큰을 이 브라우저에만 저장했습니다.'); } closeModal(); renderAll(); }
+
+function updateKeyStatus() { const saved = localStorage.getItem('growth-radar-byok'); $('#keyStatus').textContent = saved ? '저장됨' : '미설정'; $('#keyStatus').classList.toggle('saved', Boolean(saved)); }
+function runGeoDiagnosis() { const form = Object.fromEntries(new FormData($('#geoForm')).entries()); geoState.url = form.url; geoState.brand = form.brand; geoState.industry = form.industry; save('growth-radar-geo', geoState); renderGeoResult(); $('#snapshotStatus').textContent = `SNAPSHOT · ${new Date().toLocaleDateString('ko-KR')}`; showToast('같은 스냅샷 기준으로 GEO 진단을 계산했습니다.'); }
+function exportMarketingReport() { const result = calculateGeo(); const lines = [`# ${geoState.brand} GEO·마케팅 분석 리포트`,``,`- 사이트: ${geoState.url}`,'- 분석 원칙: 점수는 코드로 계산하고 AI는 설명만 담당',`- GEO Score: ${result.total}/100 (${result.grade})`,'',`## 영역별 점수`,...result.metrics.map(metric=>`- ${metric.label}: ${metric.score}/100 — ${metric.question}`),'',`## 우선순위`,...result.sorted.map((metric,index)=>`${index+1}. ${metric.label} (${metric.score}점) — ${metric.evidence[0]} 보완`),'',`## 마케팅 실행 큐`,...marketingActions.map(action=>`- ${action.title}: ${action.detail}`),'',`## 경쟁사 메시지`,...competitorMessages.map(item=>`- ${item.name}: ${item.signal} → ${item.response}`)]; const blob = new Blob([lines.join('\n')],{type:'text/markdown;charset=utf-8'}); const url = URL.createObjectURL(blob); const link=document.createElement('a'); link.href=url; link.download='haist-geo-marketing-report.md'; link.click(); URL.revokeObjectURL(url); showToast('마케팅 분석 Markdown을 저장했습니다.'); }
+
+$$('.nav-item').forEach(item => item.addEventListener('click', () => setView(item.dataset.view)));
+$$('[data-view-target]').forEach(button => button.addEventListener('click', () => setView(button.dataset.viewTarget)));
+bindFilters($('#overviewCompetitorTabs')); bindFilters($('#adsFilters'));
+$('#adSort').addEventListener('change', renderAds); $('#quickAddBtn').addEventListener('click', () => openModal('log')); $('#addAdBtn').addEventListener('click', () => openModal('ad')); $('#addKeywordBtn').addEventListener('click', () => openModal('keyword')); $('#addContentBtn').addEventListener('click', () => openModal('content')); $('#addLogBtn').addEventListener('click', () => openModal('log')); $('#byokBtn').addEventListener('click', () => openModal('token')); $('#runGeoBtn').addEventListener('click', runGeoDiagnosis); $('#exportMarketingBtn').addEventListener('click', exportMarketingReport); $('#modalClose').addEventListener('click', closeModal); $('#modalBackdrop').addEventListener('click', event => { if (event.target === $('#modalBackdrop')) closeModal(); }); $('#captureForm').addEventListener('submit', handleSubmit);
+$('#seedKeywordBtn').addEventListener('click', () => { if (!state.keywords.some(item => item.keyword === '남성확대수술 부작용')) { state.keywords = initialKeywords.map(item => ({...item})); save('growth-radar-keywords', state.keywords); renderAll(); showToast('샘플 키워드를 채웠습니다.'); } else showToast('이미 샘플 데이터가 있습니다.'); });
+document.addEventListener('click', event => { const deleteButton = event.target.closest('[data-delete-keyword]'); if (deleteButton) { state.keywords = state.keywords.filter(item => String(item.id) !== deleteButton.dataset.deleteKeyword); save('growth-radar-keywords', state.keywords); renderAll(); showToast('키워드를 삭제했습니다.'); } const moveButton = event.target.closest('[data-move-content]'); if (moveButton) { const item = state.content.find(content => String(content.id) === moveButton.dataset.moveContent); if (item) { item.lane = item.lane === 'idea' ? 'progress' : 'done'; save('growth-radar-content', state.content); renderContent(); showToast(item.lane === 'done' ? '콘텐츠를 발행 완료로 옮겼습니다.' : '콘텐츠 작성을 시작했습니다.'); } } });
+$('#exportBtn').addEventListener('click', () => { const payload = JSON.stringify({ exportedAt:new Date().toISOString(), ads:state.ads, keywords:state.keywords, content:state.content, logs:state.logs }, null, 2); const blob = new Blob([payload], {type:'application/json'}); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href=url; link.download='growth-radar-backup.json'; link.click(); URL.revokeObjectURL(url); showToast('데이터 백업 파일을 내려받았습니다.'); });
+updateKeyStatus(); renderAll();
